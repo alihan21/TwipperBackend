@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>0f2d0e53-c8fc-4d70-b7a4-13a7c85a7dc5</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20190411194424_lol.cs" />
+    <Compile Remove="Migrations\20190411194424_lol.Designer.cs" />
+    <Compile Remove="Migrations\20190423130555_volgersEnVolgendToegevoegd.cs" />
+    <Compile Remove="Migrations\20190423130555_volgersEnVolgendToegevoegd.Designer.cs" />
+    <Compile Remove="Migrations\20190521195928_Verandering10ù.cs" />
+    <Compile Remove="Migrations\20190521195928_Verandering10ù.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="NSwag.AspNetCore" Version="12.3.1" />
+  </ItemGroup>
+
+</Project>
