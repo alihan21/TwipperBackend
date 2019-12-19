@@ -15,14 +15,14 @@ namespace TwitterBackEnd.DTOs
         public List<GebruikerDTO> Gevolgden { get; set; }
         public List<GebruikerDTO> Volgers { get; set; }
 
-        public GebruikerDTO(Gebruiker gebruiker){
+        public GebruikerDTO(User gebruiker){
             Id = gebruiker.Id;
-            VolledigeNaam = gebruiker.VolledigeNaam;
+            VolledigeNaam = gebruiker.FullName;
             Email = gebruiker.Email;
             UserName = gebruiker.UserName;
             Tweets = VulLijstMetTweetDTOs(gebruiker.Tweets);
-            Gevolgden = VulLijstMetGevolgdenOfVolgers(gebruiker.Gevolgden);
-            Volgers = VulLijstMetGevolgdenOfVolgers(gebruiker.Volgers);
+            Gevolgden = VulLijstMetGevolgdenOfVolgers(gebruiker.FollowingUsers);
+            Volgers = VulLijstMetGevolgdenOfVolgers(gebruiker.Followers);
         }
 
         public GebruikerDTO(string id, string volledigeNaam, string email, string username, List<Tweet> tweets)
@@ -34,11 +34,11 @@ namespace TwitterBackEnd.DTOs
             Tweets = VulLijstMetTweetDTOs(tweets);
         }
 
-        private List<GebruikerDTO> VulLijstMetGevolgdenOfVolgers(List<Gebruiker> volgers)
+        private List<GebruikerDTO> VulLijstMetGevolgdenOfVolgers(List<User> volgers)
         {
             List<GebruikerDTO> gebruikerDTOs = new List<GebruikerDTO>();
 
-            volgers.ForEach(v => gebruikerDTOs.Add(new GebruikerDTO(v.Id, v.VolledigeNaam, v.Email, v.UserName, v.Tweets)));
+            volgers.ForEach(v => gebruikerDTOs.Add(new GebruikerDTO(v.Id, v.FullName, v.Email, v.UserName, v.Tweets)));
 
             return gebruikerDTOs;
         }

@@ -44,7 +44,7 @@ namespace TwitterBackEnd
                 options.UseSqlServer(Configuration.GetConnectionString("DevConnection"));
                 });
 
-            services.AddDefaultIdentity<Gebruiker>(options =>{
+            services.AddDefaultIdentity<User>(options =>{
                 
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
@@ -57,7 +57,7 @@ namespace TwitterBackEnd
 
             services.AddCors();
             services.AddSession();
-            services.AddScoped<IGebruikerRepository, GebruikerRepository>();
+            services.AddScoped<IUserRepository, GebruikerRepository>();
 
             var key = Encoding.UTF8.GetBytes(Configuration["JWT_SecretKey"]);
 
