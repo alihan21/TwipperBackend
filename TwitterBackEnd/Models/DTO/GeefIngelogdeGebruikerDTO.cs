@@ -18,15 +18,15 @@ namespace TwitterBackEnd.DTOs
         public List<GebruikerZonderTweetsDTO> Volgers { get; set; }
         public List<GebruikerDTO> Gevolgden { get; set; }
 
-        public GeefIngelogdeGebruikerDTO(Gebruiker gebruiker)
+        public GeefIngelogdeGebruikerDTO(User gebruiker)
         {
             Id = gebruiker.Id;
             UserName = gebruiker.UserName;
             Email = gebruiker.Email;
-            VolledigeNaam = gebruiker.VolledigeNaam;
+            VolledigeNaam = gebruiker.FullName;
             Tweets = VulLijstMetTweetDTOs(gebruiker.Tweets);
-            Volgers = VulLijstMetGebruikerZonderTweetsDTO(gebruiker.Volgers);
-            Gevolgden = VulLijstMetGebruikerDTOs(gebruiker.Gevolgden);
+            Volgers = VulLijstMetGebruikerZonderTweetsDTO(gebruiker.Followers);
+            Gevolgden = VulLijstMetGebruikerDTOs(gebruiker.FollowingUsers);
             var lol = 15;
         }
 
@@ -41,7 +41,7 @@ namespace TwitterBackEnd.DTOs
             return tijdeljk;
         }
 
-        private List<GebruikerZonderTweetsDTO> VulLijstMetGebruikerZonderTweetsDTO(List<Gebruiker> gebruikers){
+        private List<GebruikerZonderTweetsDTO> VulLijstMetGebruikerZonderTweetsDTO(List<User> gebruikers){
             List<GebruikerZonderTweetsDTO> tijdeljk = new List<GebruikerZonderTweetsDTO>();
 
             gebruikers.ForEach(g => {
@@ -51,12 +51,12 @@ namespace TwitterBackEnd.DTOs
             return tijdeljk;
         }
 
-        private List<GebruikerDTO> VulLijstMetGebruikerDTOs(List<Gebruiker> gebruikers)
+        private List<GebruikerDTO> VulLijstMetGebruikerDTOs(List<User> gebruikers)
         {
             List<GebruikerDTO> tijdeljk = new List<GebruikerDTO>();
 
             gebruikers.ForEach(g => {
-                tijdeljk.Add(new GebruikerDTO(g.Id, g.VolledigeNaam, g.Email, g.UserName, g.Tweets));
+                tijdeljk.Add(new GebruikerDTO(g.Id, g.FullName, g.Email, g.UserName, g.Tweets));
             });
 
             return tijdeljk;

@@ -15,8 +15,8 @@ namespace TwitterBackEnd.DTOs
         {
             RetweetId = retweet.RetweetId;
             Gebruiker = new GebruikerZonderTweetsDTO(retweet.Gebruiker);
-            Boodschap = retweet.Boodschap;
-            RetweetDatum = retweet.TweetDatum;
+            Boodschap = retweet.Description;
+            RetweetDatum = retweet.TweetDate;
         }
     }
 }
