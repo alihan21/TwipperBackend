@@ -9,10 +9,10 @@ namespace TwitterBackEnd.DTOs
         public string Email { get; set; }
         public string UserName { get; set; }
 
-        public GebruikerZonderTweetsDTO(Gebruiker gebruiker)
+        public GebruikerZonderTweetsDTO(User gebruiker)
         {
             Id = gebruiker.Id;
-            VolledigeNaam = gebruiker.VolledigeNaam;
+            VolledigeNaam = gebruiker.FullName;
             Email = gebruiker.Email;
             UserName = gebruiker.UserName;
         }

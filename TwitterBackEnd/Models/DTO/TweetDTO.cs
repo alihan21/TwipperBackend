@@ -14,8 +14,8 @@ namespace TwitterBackEnd.DTOs
         public TweetDTO(Tweet tweet)
         {
             TweetId = tweet.TweetId;
-            Boodschap = tweet.Boodschap;
-            TweetDatum = tweet.TweetDatum;
+            Boodschap = tweet.Description;
+            TweetDatum = tweet.TweetDate;
             Retweets = VulLijstMetRetweetDTOs(tweet.Retweets);
         }
 
