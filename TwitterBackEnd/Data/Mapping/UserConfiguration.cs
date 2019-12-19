@@ -8,7 +8,7 @@ namespace TwitterBackEnd.Data.Mapping
   {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-      builder.ToTable("Gebruiker");
+      builder.ToTable("User");
     }
   }
 }

@@ -9,8 +9,8 @@ using TwitterBackEnd.Models.ViewModels;
 
 namespace TwitterBackEnd.Controllers
 {
-  [Route("Twipper/[controller]")]
   [ApiController]
+  [Route("Twipper/[controller]")]
   public class LoggedInUserController : ControllerBase
   {
     private readonly UserManager<User> _userManager;
@@ -28,7 +28,7 @@ namespace TwitterBackEnd.Controllers
     /// <returns>logged user</returns>
     [HttpGet]
     [Authorize]
-    public ActionResult<GeefIngelogdeGebruikerDTO> GeefGebruiker()
+    public ActionResult<GeefIngelogdeGebruikerDTO> GetLoggedUser()
     {
       var gebruiker =  GeefIngelogdeGebruiker();
 
@@ -47,8 +47,8 @@ namespace TwitterBackEnd.Controllers
     /// <returns>user with new tweet</returns>
     [HttpPost]
     [Authorize]
-    [Route("/tweets/add")]
-    public ActionResult<User> VoegNieuweTweet(NieuweTweetOfRetweetDTO nieuweTweetMetGebruikerIdDTO)
+    [Route("tweets/add")]
+    public ActionResult<User> AddNewTweet(NieuweTweetOfRetweetDTO nieuweTweetMetGebruikerIdDTO)
     {
       var gebruiker =  _gebruikerRepository.GetUserById(nieuweTweetMetGebruikerIdDTO.GebruikerId);
 
@@ -68,10 +68,10 @@ namespace TwitterBackEnd.Controllers
     /// </summary>
     /// <param name="gebruikerId">The id of the following user</param>
     /// <returns>user with new following</returns>
-    [HttpPost("{gebruikerId}")]
+    [HttpPost]
     [Authorize]
-    [Route("/followers/add")]
-    public ActionResult<User> VolgGebruikerMetNaam(string gebruikerId)
+    [Route("followers/add/{gebruikerId}")]
+    public ActionResult<User> AddFollowing(string gebruikerId)
     {
       var gebruiker = GeefIngelogdeGebruiker();
       if (gebruiker == null)
@@ -100,8 +100,7 @@ namespace TwitterBackEnd.Controllers
     [HttpPost]
     [Authorize]
     [Route("tweet/retweets/add")]
-    // POST: api/GebruikerProfiel/VoegNieuweRetweet
-    public ActionResult VoegNieuweRetweet(NieuweTweetOfRetweetDTO nieuweTweetOfRetweetDTO)
+    public ActionResult AddNewRetweet(NieuweTweetOfRetweetDTO nieuweTweetOfRetweetDTO)
     {
       var ingelogdeGebruiker = GeefIngelogdeGebruiker();
       var gebruikerVanOrigineleTweet = _gebruikerRepository.GetUserByTweetId(nieuweTweetOfRetweetDTO.TweetId);

@@ -16,8 +16,8 @@ using TwitterBackEnd.Models.ViewModels;
 
 namespace TwitterBackEnd.Controllers
 {
-  [Route("Twipper/[controller]")]
   [ApiController]
+  [Route("Twipper/[controller]")]
   public class UsersController : ControllerBase
   {
     private readonly IUserRepository _gebruikerRepository;
@@ -39,7 +39,7 @@ namespace TwitterBackEnd.Controllers
     /// </summary>
     /// <returns>All users from DB</returns>
     [HttpGet]
-    [Route("/all")]
+    [Route("all")]
     public ActionResult<List<GebruikerDTO>> GetAll()
     {
       var alleGebruikers =  _gebruikerRepository.GetAll();
@@ -59,9 +59,9 @@ namespace TwitterBackEnd.Controllers
     /// </summary>
     /// <param name="naamVanGebruiker">username</param>
     /// <returns>user</returns>
-    [HttpGet("/{userName}")]
-    [Authorize]
-    public ActionResult<GebruikerDTO> GeefGebruikerMetNaam(string userName)
+    [HttpGet]
+    [Route("{userName}")]
+    public ActionResult<GebruikerDTO> GetUserByUserName(string userName)
     {
       var gebruiker =  _gebruikerRepository.GetUserByUserName(userName);
 
@@ -79,8 +79,7 @@ namespace TwitterBackEnd.Controllers
     /// <param name="loginDTO">The info of user</param>
     /// <returns>user</returns>
     [HttpPost]
-    [Route("/login")]
-    [AllowAnonymous]
+    [Route("login")]
     public async Task<ActionResult<string>> Login(LoginDTO loginDTO)
     {
       var gebruiker = await _userManager.FindByNameAsync(loginDTO.Gebruikersnaam);
@@ -113,9 +112,8 @@ namespace TwitterBackEnd.Controllers
     /// <param name="DTOViewModel">The info of user</param>
     /// <returns>user</returns>
     [HttpPost]
-    [Route("/register")]
-    [AllowAnonymous]
-    public async Task<object> RegistreerPost(RegistreerDTO DTOViewModel)
+    [Route("register")]
+    public async Task<object> Register(RegistreerDTO DTOViewModel)
     {
       User gebruiker = new User(DTOViewModel.VolledigeNaam, DTOViewModel.Email, DTOViewModel.UserName);
 
