@@ -40,7 +40,7 @@ namespace TwitterBackEnd.Controllers
     /// <returns>All users from DB</returns>
     [HttpGet]
     [Route("all")]
-    public ActionResult<List<GebruikerDTO>> GetAll()
+    public ActionResult<List<UserDTO>> GetAll()
     {
       var alleGebruikers =  _gebruikerRepository.GetAll();
 
@@ -61,7 +61,7 @@ namespace TwitterBackEnd.Controllers
     /// <returns>user</returns>
     [HttpGet]
     [Route("{userName}")]
-    public ActionResult<GebruikerDTO> GetUserByUserName(string userName)
+    public ActionResult<UserDTO> GetUserByUserName(string userName)
     {
       var gebruiker =  _gebruikerRepository.GetUserByUserName(userName);
 
@@ -70,7 +70,7 @@ namespace TwitterBackEnd.Controllers
         return NotFound();
       }
 
-      return Ok(new GebruikerDTO(gebruiker));
+      return Ok(new UserDTO(gebruiker));
     }
 
     /// <summary>
@@ -82,9 +82,9 @@ namespace TwitterBackEnd.Controllers
     [Route("login")]
     public async Task<ActionResult<string>> Login(LoginDTO loginDTO)
     {
-      var gebruiker = await _userManager.FindByNameAsync(loginDTO.Gebruikersnaam);
+      var gebruiker = await _userManager.FindByNameAsync(loginDTO.UserName);
 
-      if (gebruiker != null && await _userManager.CheckPasswordAsync(gebruiker, loginDTO.Wachtwoord))
+      if (gebruiker != null && await _userManager.CheckPasswordAsync(gebruiker, loginDTO.Password))
       {
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -113,9 +113,9 @@ namespace TwitterBackEnd.Controllers
     /// <returns>user</returns>
     [HttpPost]
     [Route("register")]
-    public async Task<object> Register(RegistreerDTO DTOViewModel)
+    public async Task<object> Register(RegisterDTO DTOViewModel)
     {
-      User gebruiker = new User(DTOViewModel.VolledigeNaam, DTOViewModel.Email, DTOViewModel.UserName);
+      User gebruiker = new User(DTOViewModel.FullName, DTOViewModel.Email, DTOViewModel.UserName);
 
       try
       {
@@ -129,11 +129,11 @@ namespace TwitterBackEnd.Controllers
       }
     }
 
-    private List<GebruikerDTO> VervormLijstVanGebruikersNaarLijstVanGebruikerDTOs(List<User> alleGebruikers)
+    private List<UserDTO> VervormLijstVanGebruikersNaarLijstVanGebruikerDTOs(List<User> alleGebruikers)
     {
-      List<GebruikerDTO> lijstVanGebruikerDTOs = new List<GebruikerDTO>();
+      List<UserDTO> lijstVanGebruikerDTOs = new List<UserDTO>();
 
-      alleGebruikers.ForEach(g => lijstVanGebruikerDTOs.Add(new GebruikerDTO(g)));
+      alleGebruikers.ForEach(g => lijstVanGebruikerDTOs.Add(new UserDTO(g)));
 
       return lijstVanGebruikerDTOs;
     }

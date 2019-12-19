@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TwitterBackEnd.DTOs;
 using TwitterBackEnd.Models.Domein;
+using TwitterBackEnd.Models.DTO;
 using TwitterBackEnd.Models.ViewModels;
 
 namespace TwitterBackEnd.Controllers
@@ -28,7 +29,7 @@ namespace TwitterBackEnd.Controllers
     /// <returns>logged user</returns>
     [HttpGet]
     [Authorize]
-    public ActionResult<GeefIngelogdeGebruikerDTO> GetLoggedUser()
+    public ActionResult<UserDTO> GetLoggedUser()
     {
       var gebruiker =  GeefIngelogdeGebruiker();
 
@@ -37,24 +38,24 @@ namespace TwitterBackEnd.Controllers
         return NotFound();
       }
 
-      return Ok(new GeefIngelogdeGebruikerDTO(gebruiker));
+      return Ok(new UserDTO(gebruiker));
     }
 
     /// <summary>
     /// Add a new tweet
     /// </summary>
-    /// <param name="nieuweTweetMetGebruikerIdDTO">The info of new tweet</param>
+    /// <param name="newTweetDTO">The info of new tweet</param>
     /// <returns>user with new tweet</returns>
     [HttpPost]
     [Authorize]
     [Route("tweets/add")]
-    public ActionResult<User> AddNewTweet(NieuweTweetOfRetweetDTO nieuweTweetMetGebruikerIdDTO)
+    public ActionResult<User> AddNewTweet(NewTweetDTO newTweetDTO)
     {
-      var gebruiker =  _gebruikerRepository.GetUserById(nieuweTweetMetGebruikerIdDTO.GebruikerId);
+      var gebruiker =  _gebruikerRepository.GetUserById(newTweetDTO.GebruikerId);
 
       if (gebruiker != null)
       {
-        gebruiker.AddNewTweet(nieuweTweetMetGebruikerIdDTO.TweetBeschrjving);
+        gebruiker.AddNewTweet(newTweetDTO.TweetBeschrjving);
         _gebruikerRepository.SaveChanges();
 
         return Ok();
@@ -95,23 +96,23 @@ namespace TwitterBackEnd.Controllers
     /// <summary>
     /// retweet a existing tweet
     /// </summary>
-    /// <param name="nieuweTweetOfRetweetDTO">The info of retweet</param>
+    /// <param name="newRetweetDTO">The info of retweet</param>
     /// <returns>user</returns>
     [HttpPost]
     [Authorize]
     [Route("tweet/retweets/add")]
-    public ActionResult AddNewRetweet(NieuweTweetOfRetweetDTO nieuweTweetOfRetweetDTO)
+    public ActionResult AddNewRetweet(NewRetweetDTO newRetweetDTO)
     {
       var ingelogdeGebruiker = GeefIngelogdeGebruiker();
-      var gebruikerVanOrigineleTweet = _gebruikerRepository.GetUserByTweetId(nieuweTweetOfRetweetDTO.TweetId);
+      var gebruikerVanOrigineleTweet = _gebruikerRepository.GetUserByTweetId(newRetweetDTO.TweetId);
 
       if (ingelogdeGebruiker != null)
       {
-        var origineleTweet = gebruikerVanOrigineleTweet.Tweets.SingleOrDefault(t => t.TweetId == nieuweTweetOfRetweetDTO.TweetId);
+        var origineleTweet = gebruikerVanOrigineleTweet.Tweets.SingleOrDefault(t => t.TweetId == newRetweetDTO.TweetId);
 
         if (origineleTweet != null)
         {
-          origineleTweet.VoegNieuweRetweet(ingelogdeGebruiker, nieuweTweetOfRetweetDTO.TweetBeschrjving);
+          origineleTweet.VoegNieuweRetweet(ingelogdeGebruiker, newRetweetDTO.TweetBeschrjving);
 
           _gebruikerRepository.SaveChanges();
 
