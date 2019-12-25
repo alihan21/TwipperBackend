@@ -41,7 +41,10 @@ namespace TwitterBackEnd.Models.Domein
 
     public void AddNewTweet(string tweetDescription)
     {
-      Tweets.Add(new Tweet(tweetDescription));
+      Tweet newTweet = new Tweet(tweetDescription);
+      newTweet.PostedBy = this;
+
+      Tweets.Add(newTweet);
     }
 
     public void FollowUser(User following)

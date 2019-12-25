@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TwitterBackEnd.Data;
 
 namespace TwitterBackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191219134019_Init6")]
+    partial class Init6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,13 +179,13 @@ namespace TwitterBackEnd.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("PostedById");
-
                     b.Property<DateTime>("TweetDate");
+
+                    b.Property<string>("UserId");
 
                     b.HasKey("TweetId");
 
-                    b.HasIndex("PostedById");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tweets");
                 });
@@ -313,9 +315,9 @@ namespace TwitterBackEnd.Migrations
 
             modelBuilder.Entity("TwitterBackEnd.Models.Domein.Tweet", b =>
                 {
-                    b.HasOne("TwitterBackEnd.Models.Domein.User", "PostedBy")
+                    b.HasOne("TwitterBackEnd.Models.Domein.User")
                         .WithMany("Tweets")
-                        .HasForeignKey("PostedById");
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
