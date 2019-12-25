@@ -9,6 +9,7 @@ namespace TwitterBackEnd.Models.Domein
     public string Description { get; set; }
     public DateTime TweetDate { get; set; }
     public List<Retweet> Retweets { get; set; }
+    public User PostedBy { get; set; }
 
     public Tweet(string description)
     {
