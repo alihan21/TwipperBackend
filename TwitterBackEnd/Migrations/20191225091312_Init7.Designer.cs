@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TwitterBackEnd.Data;
 
 namespace TwitterBackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191225091312_Init7")]
+    partial class Init7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,21 +150,21 @@ namespace TwitterBackEnd.Migrations
 
             modelBuilder.Entity("TwitterBackEnd.Models.Domein.Retweet", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("RetweetId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BaseTweetDate");
-
                     b.Property<string>("Description");
 
-                    b.Property<string>("PostedById");
+                    b.Property<string>("GebruikerId");
+
+                    b.Property<DateTime>("TweetDate");
 
                     b.Property<int?>("TweetId");
 
-                    b.HasKey("Id");
+                    b.HasKey("RetweetId");
 
-                    b.HasIndex("PostedById");
+                    b.HasIndex("GebruikerId");
 
                     b.HasIndex("TweetId");
 
@@ -171,17 +173,17 @@ namespace TwitterBackEnd.Migrations
 
             modelBuilder.Entity("TwitterBackEnd.Models.Domein.Tweet", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("TweetId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("BaseTweetDate");
 
                     b.Property<string>("Description");
 
                     b.Property<string>("PostedById");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("TweetDate");
+
+                    b.HasKey("TweetId");
 
                     b.HasIndex("PostedById");
 
@@ -192,8 +194,6 @@ namespace TwitterBackEnd.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AccCreatedOn");
 
                     b.Property<int>("AccessFailedCount");
 
@@ -304,9 +304,9 @@ namespace TwitterBackEnd.Migrations
 
             modelBuilder.Entity("TwitterBackEnd.Models.Domein.Retweet", b =>
                 {
-                    b.HasOne("TwitterBackEnd.Models.Domein.User", "PostedBy")
+                    b.HasOne("TwitterBackEnd.Models.Domein.User", "Gebruiker")
                         .WithMany()
-                        .HasForeignKey("PostedById");
+                        .HasForeignKey("GebruikerId");
 
                     b.HasOne("TwitterBackEnd.Models.Domein.Tweet")
                         .WithMany("Retweets")

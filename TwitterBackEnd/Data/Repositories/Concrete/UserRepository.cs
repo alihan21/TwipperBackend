@@ -5,11 +5,11 @@ using TwitterBackEnd.Models.Domein;
 
 namespace TwitterBackEnd.Data.Repositories
 {
-  public class GebruikerRepository : IUserRepository
+  public class UserRepository : IUserRepository
   {
     private readonly ApplicationDbContext _dbContext;
 
-    public GebruikerRepository(ApplicationDbContext dbContext)
+    public UserRepository(ApplicationDbContext dbContext)
     {
       _dbContext = dbContext;
     }
@@ -24,14 +24,14 @@ namespace TwitterBackEnd.Data.Repositories
       return _dbContext.UsersDB.
           Include(g => g.Tweets).
           ThenInclude(t => t.Retweets).
-          ThenInclude(r => r.Gebruiker).
+          ThenInclude(r => r.PostedBy).
           Include(g => g.FollowingList).
           ThenInclude(gtt => gtt.Follower).
           Include(g => g.FollowersList).
           ThenInclude(gtt => gtt.Following).
           ThenInclude(g => g.Tweets).
           ThenInclude(t => t.Retweets).
-          ThenInclude(r => r.Gebruiker).
+          ThenInclude(r => r.PostedBy).
           SingleOrDefault(g => g.Id == userId);
     }
 
@@ -40,7 +40,7 @@ namespace TwitterBackEnd.Data.Repositories
       return _dbContext.UsersDB.
           Include(g => g.Tweets).
           ThenInclude(t => t.Retweets).
-          ThenInclude(r => r.Gebruiker).
+          ThenInclude(r => r.PostedBy).
           Include(g => g.FollowingList).
           ThenInclude(gtt => gtt.Follower).
           Include(g => g.FollowersList).
@@ -53,12 +53,12 @@ namespace TwitterBackEnd.Data.Repositories
       return _dbContext.UsersDB.
           Include(g => g.Tweets).
           ThenInclude(t => t.Retweets).
-          ThenInclude(r => r.Gebruiker).
+          ThenInclude(r => r.PostedBy).
           Include(g => g.FollowingList).
           ThenInclude(gtt => gtt.Follower).
           Include(g => g.FollowersList).
           ThenInclude(gtt => gtt.Following).
-          SingleOrDefault(g => g.Tweets.Exists(t => t.TweetId == tweetId));
+          SingleOrDefault(g => g.Tweets.Exists(t => t.Id == tweetId));
     }
 
     public IEnumerable<User> GetAll()
@@ -66,7 +66,7 @@ namespace TwitterBackEnd.Data.Repositories
       return _dbContext.UsersDB.
           Include(g => g.Tweets).
           ThenInclude(t => t.Retweets).
-          ThenInclude(r => r.Gebruiker).
+          ThenInclude(r => r.PostedBy).
           Include(g => g.FollowingList).
           ThenInclude(gtt => gtt.Follower).
           Include(g => g.FollowersList).

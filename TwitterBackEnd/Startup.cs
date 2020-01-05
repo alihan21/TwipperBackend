@@ -12,6 +12,8 @@ using System;
 using System.Text;
 using TwitterBackEnd.Data;
 using TwitterBackEnd.Data.Repositories;
+using TwitterBackEnd.Data.Repositories.Concrete;
+using TwitterBackEnd.Data.Repositories.Interfaces;
 using TwitterBackEnd.Models.Domein;
 
 namespace TwitterBackEnd
@@ -54,6 +56,7 @@ namespace TwitterBackEnd
         options.Password.RequireDigit = false;
         options.Password.RequireNonAlphanumeric = false;
         options.Password.RequireUppercase = false;
+        options.Password.RequiredLength = 1;
       })
       .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -62,7 +65,8 @@ namespace TwitterBackEnd
 
       services.AddCors();
       services.AddSession();
-      services.AddScoped<IUserRepository, GebruikerRepository>();
+      services.AddScoped<IUserRepository, UserRepository>();
+      services.AddScoped<ITweetRepository, TweetRepository>();
 
       var key = Encoding.UTF8.GetBytes(Configuration["JWT_SecretKey"]);
 
