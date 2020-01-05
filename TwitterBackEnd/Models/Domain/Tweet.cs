@@ -1,20 +1,15 @@
 using System;
 using System.Collections.Generic;
+using TwitterBackEnd.Models.Domain;
 
 namespace TwitterBackEnd.Models.Domein
 {
-  public class Tweet
+  public class Tweet : BaseTweet
   {
-    public int TweetId { get; set; }
-    public string Description { get; set; }
-    public DateTime TweetDate { get; set; }
     public List<Retweet> Retweets { get; set; }
-    public User PostedBy { get; set; }
 
-    public Tweet(string description)
+    public Tweet(User postedBy, string description, string date) : base(postedBy, description, date)
     {
-      Description = description;
-      TweetDate = DateTime.UtcNow;
       Retweets = new List<Retweet>();
     }
 
@@ -23,9 +18,9 @@ namespace TwitterBackEnd.Models.Domein
       Retweets = new List<Retweet>();
     }
 
-    public void VoegNieuweRetweet(User user, string description)
+    public void VoegNieuweRetweet(User user, string description, string date)
     {
-      Retweets.Add(new Retweet(user, description));
+      Retweets.Add(new Retweet(user, description, date));
     }
   }
 }

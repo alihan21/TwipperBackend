@@ -8,13 +8,15 @@ namespace TwitterBackEnd.DTOs
     public string VolledigeNaam { get; set; }
     public string Email { get; set; }
     public string UserName { get; set; }
+    public string AccCreatedOn { get; set; }
 
-    public UserWithoutRetweetsDTO(User gebruiker)
+    public UserWithoutRetweetsDTO(User user)
     {
-      Id = gebruiker.Id;
-      VolledigeNaam = gebruiker.FullName;
-      Email = gebruiker.Email;
-      UserName = gebruiker.UserName;
+      Id = user.Id;
+      VolledigeNaam = user.FullName;
+      Email = user.Email;
+      UserName = user.UserName;
+      AccCreatedOn = user.AccCreatedOn;
     }
   }
 }

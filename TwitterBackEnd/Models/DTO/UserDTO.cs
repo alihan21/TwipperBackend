@@ -9,6 +9,7 @@ namespace TwitterBackEnd.DTOs
     public string FullName { get; set; }
     public string Email { get; set; }
     public string UserName { get; set; }
+    public string AccCreatedOn { get; set; }
     public List<TweetDTO> Tweets { get; set; }
     public List<UserDTO> Following { get; set; }
     public List<UserDTO> Followers { get; set; }
@@ -19,6 +20,7 @@ namespace TwitterBackEnd.DTOs
       FullName = user.FullName;
       Email = user.Email;
       UserName = user.UserName;
+      AccCreatedOn = user.AccCreatedOn;
       Tweets = FillWithTweetDTOs(user.Tweets);
       Following = FillWithFollowersOrFollowing(user.FollowingUsers);
       Followers = FillWithFollowersOrFollowing(user.Followers);

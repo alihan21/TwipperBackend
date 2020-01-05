@@ -120,22 +120,25 @@ namespace TwitterBackEnd.Controllers
     [Route("register")]
     public async Task<ActionResult<UserDTO>> Register(RegisterDTO DTOViewModel)
     {
+      var errorMessage = "";
       User user = new User(DTOViewModel.FullName, DTOViewModel.Email, DTOViewModel.UserName);
+
 
       try
       {
         var result = await _userManager.CreateAsync(user, DTOViewModel.Password);
+        errorMessage = result.Errors.FirstOrDefault()?.Description;
 
         if (result.Succeeded)
         {
           return Ok(new UserDTO(user));
         }
 
-        return ValidationProblem();
+        return BadRequest(new { message = errorMessage });
       }
       catch (Exception ex)
       {
-        return BadRequest("Register failed");
+        return BadRequest(new { message = "Register failed" });
       }
     }
 

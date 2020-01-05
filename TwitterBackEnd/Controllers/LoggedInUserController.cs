@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using TwitterBackEnd.DTOs;
@@ -55,7 +56,7 @@ namespace TwitterBackEnd.Controllers
 
       if (gebruiker != null)
       {
-        gebruiker.AddNewTweet(newTweetDTO.TweetBeschrjving);
+        gebruiker.AddNewTweet(newTweetDTO.TweetDescription, DateTime.Now.ToString());
         _gebruikerRepository.SaveChanges();
 
         return Ok();
@@ -87,8 +88,16 @@ namespace TwitterBackEnd.Controllers
         return NotFound();
       }
 
-      gebruiker.FollowUser(deTeVolgenGebruiker);
-      _gebruikerRepository.SaveChanges();
+
+      try
+      {
+        gebruiker.FollowUser(deTeVolgenGebruiker);
+        _gebruikerRepository.SaveChanges();
+      }
+      catch(Exception ex)
+      {
+        return BadRequest(ex);
+      }
 
       return Ok(gebruiker);
     }
@@ -108,11 +117,11 @@ namespace TwitterBackEnd.Controllers
 
       if (ingelogdeGebruiker != null)
       {
-        var origineleTweet = gebruikerVanOrigineleTweet.Tweets.SingleOrDefault(t => t.TweetId == newRetweetDTO.TweetId);
+        var origineleTweet = gebruikerVanOrigineleTweet.Tweets.SingleOrDefault(t => t.Id == newRetweetDTO.TweetId);
 
         if (origineleTweet != null)
         {
-          origineleTweet.VoegNieuweRetweet(ingelogdeGebruiker, newRetweetDTO.TweetBeschrjving);
+          origineleTweet.VoegNieuweRetweet(ingelogdeGebruiker, newRetweetDTO.TweetDescription, DateTime.Now.ToString());
 
           _gebruikerRepository.SaveChanges();
 

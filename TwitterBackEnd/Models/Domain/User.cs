@@ -10,6 +10,7 @@ namespace TwitterBackEnd.Models.Domein
   {
     [Column(TypeName = "nvarchar(50)")]
     public string FullName { get; set; }
+    public string AccCreatedOn { get; set; }
     public List<Tweet> Tweets { get; set; }
     public List<Connection> FollowersList { get; set; }
     public List<Connection> FollowingList { get; set; }
@@ -22,6 +23,7 @@ namespace TwitterBackEnd.Models.Domein
       Tweets = new List<Tweet>();
       FollowersList = new List<Connection>();
       FollowingList = new List<Connection>();
+      AccCreatedOn = DateTime.Now.ToString();
     }
 
     protected User()
@@ -29,6 +31,7 @@ namespace TwitterBackEnd.Models.Domein
       Tweets = new List<Tweet>();
       FollowersList = new List<Connection>();
       FollowingList = new List<Connection>();
+      AccCreatedOn = DateTime.Now.ToString();
     }
 
     public List<User> Followers {
@@ -39,10 +42,9 @@ namespace TwitterBackEnd.Models.Domein
       get => FollowersList.Where(gtt => gtt.Follower.Id == this.Id).Select(gtt => gtt.Following).ToList();
     }
 
-    public void AddNewTweet(string tweetDescription)
+    public void AddNewTweet(string tweetDescription, String date)
     {
-      Tweet newTweet = new Tweet(tweetDescription);
-      newTweet.PostedBy = this;
+      Tweet newTweet = new Tweet(this, tweetDescription, date);
 
       Tweets.Add(newTweet);
     }
